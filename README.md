@@ -25,7 +25,7 @@ First, build the client app in prod mode.
 
 `ember build -prod`
 
-Then reproduce the leak by run the following script:
+Then reproduce the leak by running the following script:
 
 `node scripts/test.js`
 
