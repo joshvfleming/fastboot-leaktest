@@ -1,7 +1,6 @@
 # Leaktest
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This is a test app for reproducing memory leaks in Ember FastBoot.
 
 ## Prerequisites
 
@@ -11,43 +10,23 @@ You will need the following things properly installed on your computer.
 * [Node.js](http://nodejs.org/) (with NPM)
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
 
 ## Installation
 
-* `git clone <repository-url>` this repository
+* `git clone git@github.com:joshvfleming/fastboot-leaktest.git` this repository
 * change into the new directory
 * `npm install`
 * `bower install`
+* Select "ember#canary" in the previous step if given an option.
 
-## Running / Development
+## Running
 
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+First, build the client app in prod mode.
 
-### Code Generators
+`ember build -prod`
 
-Make use of the many generators for code, try `ember help generate` for more details
+Then reproduce the leak by run the following script:
 
-### Running Tests
+`node scripts/test.js'
 
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
+Now monitor memory usage with the profiler of your choice.
