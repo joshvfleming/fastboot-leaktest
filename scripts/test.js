@@ -123,4 +123,4 @@ function nTimes(fn, n) {
   fn().then(nTimes.bind(null, fn, n - 1));
 }
 
-nTimes(runOnce, 2000);
+nTimes(runOnce, 5000);
