@@ -2,7 +2,19 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  storeConfigInMeta: false,
+  autoRun: false,
+  vendorFiles: {
+    'jquery.js': false
+  },
+  fingerprint: {
+    enabled: false
+  },
+  minifyJS: {
+    enabled: false
+  }
+});
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

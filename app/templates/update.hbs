@@ -1,0 +1,17 @@
+<div class="panel panel-default stream-update">
+  <div class="panel-body" style="height: 300px">
+    <div class="media">
+      <a class="pull-left" href="#">
+        <img class="media-object" width="65" height="65" src="{{ model.user.profile_image_url }}" />
+      </a>
+      <div class="media-body">
+        {{ model.text }}
+      </div>
+    </div>
+
+    <div class="text-muted small panel-footer">
+         Favorited {{ model.favorited }},
+         <span {{ action 'like' }} class="like-btn">Likes</span>: <span class="like-count">{{ model.retweet_count }}</span>
+    </div>
+  </div>
+</div>
