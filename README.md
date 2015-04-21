@@ -27,6 +27,6 @@ First, build the client app in prod mode.
 
 Then reproduce the leak by run the following script:
 
-`node scripts/test.js'
+`node scripts/test.js`
 
 Now monitor memory usage with the profiler of your choice.
