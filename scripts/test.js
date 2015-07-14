@@ -121,6 +121,8 @@ function nTimes(fn, n) {
     return;
   }
 
+  console.log(n);
+  console.log(process.memoryUsage());
   fn().then(nTimes.bind(null, fn, n - 1));
 }
 
