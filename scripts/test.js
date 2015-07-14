@@ -48,7 +48,7 @@ function createApp() {
       name: 'stub-renderer',
       initialize: function(app) {
         var doc = new simpleDOM.Document();
-        var domHelper = new Ember.View.DOMHelper(doc);
+        var domHelper = new Ember.HTMLBars.DOMHelper(doc);
 
         app.registry.register('renderer:-dom', {
           create: function() {
@@ -80,8 +80,10 @@ function cleanup(result) {
   // Note: we can't simply reset the object to {}, because it's aliased in other
   // places, and doing so would only wipe out this one reference to the object.
   var ActionHelper = Ember.__loader.require(
-    'ember-routing-htmlbars/helpers/action').ActionHelper;
+    'ember-views/system/action_manager').default;
 
+  console.log('Registered actions:',
+              Object.keys(ActionHelper.registeredActions).length);
   for (var action in ActionHelper.registeredActions) {
     delete ActionHelper.registeredActions[action];
   }
@@ -96,17 +98,16 @@ function render(instance) {
     element = instance.view.renderToElement();
   });
 
-  return serialize(element);
+  serialize(element);
+  return instance;
 }
 
 function runOnce() {
-  var ActionHelper = Ember.__loader.require(
-    'ember-routing-htmlbars/helpers/action').ActionHelper;
-  console.log('Registered actions:',
-              Object.keys(ActionHelper.registeredActions).length);
-
-  return app.visit('/')
-    .then(render);
+  return app.visit('/').then(function(instance) {
+    return Ember.RSVP.Promise.resolve(instance).then(render).finally(function() {
+      Ember.run(instance, 'destroy');
+    });
+  });
 }
 
 function runOnceWithPatch() {
@@ -120,6 +121,8 @@ function nTimes(fn, n) {
     return;
   }
 
+  console.log(n);
+  console.log(process.memoryUsage());
   fn().then(nTimes.bind(null, fn, n - 1));
 }
 
