@@ -48,7 +48,7 @@ function createApp() {
       name: 'stub-renderer',
       initialize: function(app) {
         var doc = new simpleDOM.Document();
-        var domHelper = new Ember.View.DOMHelper(doc);
+        var domHelper = new Ember.HTMLBars.DOMHelper(doc);
 
         app.registry.register('renderer:-dom', {
           create: function() {
@@ -80,8 +80,10 @@ function cleanup(result) {
   // Note: we can't simply reset the object to {}, because it's aliased in other
   // places, and doing so would only wipe out this one reference to the object.
   var ActionHelper = Ember.__loader.require(
-    'ember-routing-htmlbars/helpers/action').ActionHelper;
+    'ember-views/system/action_manager').default;
 
+  console.log('Registered actions:',
+              Object.keys(ActionHelper.registeredActions).length);
   for (var action in ActionHelper.registeredActions) {
     delete ActionHelper.registeredActions[action];
   }
@@ -100,8 +102,7 @@ function render(instance) {
 }
 
 function runOnce() {
-  var ActionHelper = Ember.__loader.require(
-    'ember-routing-htmlbars/helpers/action').ActionHelper;
+  var ActionHelper = Ember.__loader.require('ember-views/system/action_manager').default;
   console.log('Registered actions:',
               Object.keys(ActionHelper.registeredActions).length);
 
