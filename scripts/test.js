@@ -98,16 +98,16 @@ function render(instance) {
     element = instance.view.renderToElement();
   });
 
-  return serialize(element);
+  serialize(element);
+  return instance;
 }
 
 function runOnce() {
-  var ActionHelper = Ember.__loader.require('ember-views/system/action_manager').default;
-  console.log('Registered actions:',
-              Object.keys(ActionHelper.registeredActions).length);
-
-  return app.visit('/')
-    .then(render);
+  return app.visit('/').then(function(instance) {
+    return Ember.RSVP.Promise.resolve(instance).then(render).finally(function() {
+      Ember.run(instance, 'destroy');
+    });
+  });
 }
 
 function runOnceWithPatch() {
