@@ -62,8 +62,6 @@ function createApp() {
   return app;
 }
 
-var app = createApp();
-
 function serialize(element) {
   var serializer = new simpleDOM.HTMLSerializer(simpleDOM.voidMap);
   return serializer.serialize(element);
@@ -88,6 +86,11 @@ function cleanup(result) {
     delete ActionHelper.registeredActions[action];
   }
 
+  const Namespace = Ember.__loader.require(
+    'ember-runtime/system/namespace')['default'];
+
+  Namespace.NAMESPACES.splice(0);
+
   return result;
 }
 
@@ -103,6 +106,8 @@ function render(instance) {
 }
 
 function runOnce() {
+  var app = createApp();
+
   return app.visit('/').then(function(instance) {
     return Ember.RSVP.Promise.resolve(instance).then(render).finally(function() {
       Ember.run(instance, 'destroy');
@@ -111,6 +116,8 @@ function runOnce() {
 }
 
 function runOnceWithPatch() {
+  var app = createApp();
+
   return app.visit('/')
     .then(render)
     .then(cleanup);
